@@ -26,7 +26,13 @@ html[data-theme="dark"]{
 }
 
 *{box-sizing:border-box}
-html,body{height:100%}
+/* A mobile browser shrinks the visible viewport as its chrome slides in, but
+   100% is measured against the taller one -- which pushed the composer down
+   behind the address bar, the single worst thing about this on a phone. dvh
+   tracks the viewport actually on screen; browsers without it drop the second
+   declaration and keep the first. Text-size-adjust stops Android inflating
+   body copy to its own idea of readable and breaking the layout with it. */
+html,body{height:100%; height:100dvh; -webkit-text-size-adjust:100%}
 body{
   margin:0; background:var(--bg); color:var(--text);
   font:400 16px/1.65 var(--font); -webkit-font-smoothing:antialiased;
@@ -44,6 +50,12 @@ a{color:inherit}
   transition:margin-left .28s cubic-bezier(.4,0,.2,1), opacity .2s ease;
 }
 #sidebar.collapsed{margin-left:-258px; opacity:0; pointer-events:none}
+/* Below 900px the sidebar stops being a column and becomes an overlay -- on
+   top of the very button that opened it. Without a way out, opening the
+   conversation list on a phone was a dead end. The scrim is that way out. */
+#scrim{position:fixed; inset:0; z-index:45; background:rgba(15,18,26,.45);
+  animation:fade .2s ease both}
+@media (min-width:901px){ #scrim{display:none} }
 .new-chat{
   display:flex; align-items:center; gap:9px; width:100%; padding:9px 12px;
   background:var(--bg); border:1px solid var(--border); border-radius:var(--radius-sm);
@@ -452,6 +464,34 @@ html[data-theme="dark"] #settingsOverlay{background:rgba(0,0,0,.6)}
      the header controls do not need. */
   .wordmark{font-size:13.5px}
 }
+
+/* ───────────────────────── phones ───────────────────────── */
+@media (max-width:600px){
+  /* Below 16px, iOS Safari zooms the page in when the field takes focus and
+     does not zoom back out. The composer was 15px, so one tap left the whole
+     app scrolled sideways and stuck there. */
+  #input{font-size:16px}
+  header{padding:10px 12px}
+  #thread,#composerWrap{padding-left:12px; padding-right:12px}
+  #welcome{padding:6px 16px 0}
+  #welcome h1{font-size:26px; margin:18px 0 10px}
+  .lede{font-size:15px; margin-bottom:22px}
+  .orb-wrap.hero .orb{width:104px; height:104px}
+  .suggestions button{padding:12px 14px; font-size:14px; gap:9px}
+  .turn{margin-bottom:22px}
+  .user-msg{max-width:92%; font-size:14.5px}
+  /* 36px is a cursor target, not a thumb one. */
+  .round{width:40px; height:40px}
+  /* A fixed 112px label took a third of a 360px screen, leaving the bar it
+     labels too short to read a value off. */
+  .pbar .lbl{width:86px; font-size:12px}
+  .composer-note{font-size:11px}
+  /* Clear the home indicator: the footer is the bottom edge of this screen.
+     Voice mode's own bottom edge is handled in its ≤700px block, which sets
+     the padding shorthand and therefore has to carry the inset itself. */
+  footer{padding:6px 12px calc(10px + env(safe-area-inset-bottom)); font-size:10.5px}
+  #sidebar{height:100dvh}
+}
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.01ms !important; transition-duration:.01ms !important}
 }
@@ -582,7 +622,8 @@ html:not([data-theme="dark"]) #voiceMode{
   .orb-wrap.vm-orb .orb{width:130px; height:130px}
   .orb-wrap.vm-orb .orb-rings i{width:130px; height:130px; margin:-65px 0 0 -65px}
   .vm-stage{padding:38px 16px 16px}
-  .vm-foot{grid-template-columns:1fr; justify-items:center; gap:8px; padding:12px 16px 18px}
+  .vm-foot{grid-template-columns:1fr; justify-items:center; gap:8px;
+    padding:12px 16px calc(18px + env(safe-area-inset-bottom))}
   .vm-controls,.vm-built{grid-column:1}
   .vm-built{justify-self:center}
 }

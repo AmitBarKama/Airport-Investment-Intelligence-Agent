@@ -667,7 +667,7 @@ function openConversation(id) {
   conv.turns.forEach((t) => replayTurn(t.q, t.payload));
   renderAllHistories();
   els.thread.scrollTop = 0;
-  if (window.innerWidth <= 900) els.sidebar.classList.add("collapsed");
+  if (window.innerWidth <= 900) setSidebar(false);
 }
 
 /* Shared by the sidebar and by voice mode, so starting a fresh conversation
@@ -1519,7 +1519,16 @@ $("#vmMute").onclick = (e) => {
   setVmButton("pause");
 };
 $("#lbStop").onclick = closeVoice;
-$("#toggleSidebar").onclick = () => els.sidebar.classList.toggle("collapsed");
+/* One function decides whether the sidebar is open, because on a phone it is
+   an overlay and the scrim has to agree with it. Toggling the class in two
+   places is how the two drift apart and strand a scrim over a closed panel. */
+function setSidebar(open) {
+  els.sidebar.classList.toggle("collapsed", !open);
+  $("#scrim").classList.toggle("hidden", !open);
+}
+$("#toggleSidebar").onclick = () =>
+  setSidebar(els.sidebar.classList.contains("collapsed"));
+$("#scrim").onclick = () => setSidebar(false);
 $("#newChat").onclick = newChat;
 /* Clear all is two-step, like the per-row delete: destructive, no undo, and
    the label carries the confirmation so no dialog is needed. */
