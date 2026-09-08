@@ -109,8 +109,16 @@ class TestGracefulAbsence(unittest.TestCase):
 
     @unittest.skipIf(llm.llm_available(), "LangChain installed")
     def test_build_model_fails_actionably(self):
+        """The spec is passed explicitly rather than read from the environment.
+
+        Without it this took the "No model configured" branch on any machine
+        with no .env -- which is every machine that has just unpacked the
+        project -- and so never reached the missing-package message it exists
+        to check. It passed here only because a real .env happened to sit next
+        to it.
+        """
         with self.assertRaises(RuntimeError) as ctx:
-            llm.build_model()
+            llm.build_model("google_genai:gemini-3.5-flash-lite")
         self.assertIn("pip install", str(ctx.exception))
 
     def test_keyless_path_still_answers(self):
