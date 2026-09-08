@@ -7,11 +7,19 @@
       "use": "@vercel/python",
       "config": {
         "maxLambdaSize": "150mb",
-        "includeFiles": "{api,etl,web}/**/*,data/airports.db"
+        "includeFiles": [
+          "api/**",
+          "etl/**",
+          "web/**",
+          "data/airports.db"
+        ]
       }
     }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "vercel_app.py" }
+    {
+      "src": "/(.*)",
+      "dest": "vercel_app.py"
+    }
   ]
 }
