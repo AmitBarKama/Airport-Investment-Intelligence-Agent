@@ -97,7 +97,10 @@
       const h = line.match(/^\s*(#{1,6})\s+(.*)$/);
       if (h) {
         closeAll();
-        const level = Math.min(h[1].length + 2, 6);   // an answer is not a page
+        // An answer is not a page: it has a heading and a sub-heading, and
+        // that is all. Mapping level-for-level put "##" at 15px and "###" at
+        // 13px under 16px body text -- headings smaller than what they head.
+        const level = h[1].length <= 2 ? 3 : 4;
         out.push(`<h${level}>${inline(h[2])}</h${level}>`);
         continue;
       }

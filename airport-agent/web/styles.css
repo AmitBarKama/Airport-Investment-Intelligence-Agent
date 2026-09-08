@@ -247,7 +247,7 @@ html[data-theme="dark"] .theme-switch .knob{left:20px; background:#fff}
 .step.done{color:var(--text2)}
 
 /* answer body */
-.ai-body h3{font-size:17px; font-weight:600; margin:18px 0 8px; letter-spacing:-.01em}
+.ai-body h3, .vm-body h3{font-size:18px; font-weight:600; margin:18px 0 8px; letter-spacing:-.01em}
 .ai-body p{margin:0 0 13px}
 .ai-body ul{margin:0 0 13px; padding-left:20px}
 .ai-body li{margin:5px 0}
@@ -627,9 +627,13 @@ html[data-theme="dark"] .pill.ext{background:#1E1B4B; color:#C7D2FE; border-colo
 .ai-body ol, .vm-body ol{margin:0 0 13px; padding-left:22px; list-style:decimal}
 .ai-body ul ul, .ai-body ol ol, .ai-body ul ol, .ai-body ol ul,
 .vm-body ul ul, .vm-body ol ol, .vm-body ul ol, .vm-body ol ul{margin:4px 0 2px}
-.ai-body h4, .vm-body h4{font-size:15px; font-weight:600; margin:14px 0 6px}
-.ai-body h5, .ai-body h6, .vm-body h5, .vm-body h6{
-  font-size:13px; font-weight:600; margin:12px 0 5px; color:var(--text2)}
+/* Body copy is 16px, so a heading has to clear it. The first version set h4 to
+   15px and h5 to 13px grey, which rendered the model's "##" and "###" smaller
+   and fainter than the paragraphs underneath them. */
+.ai-body h4, .ai-body h5, .ai-body h6,
+.vm-body h4, .vm-body h5, .vm-body h6{
+  font-size:16px; font-weight:600; color:var(--text);
+  margin:16px 0 6px; letter-spacing:-.005em}
 .ai-body a, .vm-body a{color:var(--accent); text-decoration:underline; text-underline-offset:2px}
 .ai-body blockquote, .vm-body blockquote{
   margin:10px 0; padding:2px 0 2px 12px; border-left:2px solid var(--border); color:var(--text2)}

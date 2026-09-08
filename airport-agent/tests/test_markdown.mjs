@@ -38,7 +38,10 @@ test("bullets nested under a numbered item stay nested", () => {
 });
 
 test("every heading level renders as a heading", () => {
-  for (const [src, tag] of [["# One", "h3"], ["## Two", "h4"], ["### Three", "h5"]]) {
+  // Two levels only: a heading and a sub-heading. Deeper markdown collapses
+  // rather than shrinking below the body text it introduces.
+  for (const [src, tag] of [["# One", "h3"], ["## Two", "h3"],
+                            ["### Three", "h4"], ["#### Four", "h4"]]) {
     assert.match(M.render(src), new RegExp(`<${tag}>`), src);
   }
   assert.doesNotMatch(M.render("## Two"), /#/);
