@@ -1,5 +1,7 @@
 # Airport Investment Intelligence Agent
 
+**[▶ Try it live](https://airport-investment-intelligence-age-iota.vercel.app/)**
+
 A conversational agent that helps analysts find **US airports where modernization
 capital is most likely to pay off**, backed by deterministic scoring anchored to
 published FAA standards.
