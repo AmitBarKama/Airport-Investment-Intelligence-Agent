@@ -1,0 +1,13 @@
+# The deterministic half of this app (ETL, scoring, tools, the keyless planner,
+# and the whole web UI) needs NOTHING here: it is Python standard library only.
+# These packages enable the LLM path, where LangChain gives one uniform
+# tool-calling interface across providers.
+
+langchain>=1.0,<2          # pulls in langgraph and langchain-core
+langchain-google-genai     # for LLM=google_genai:...
+
+# Swap or add per provider, then change one line in .env:
+# langchain-openai         # LLM=openai:gpt-4o-mini
+# langchain-groq           # LLM=groq:llama-3.3-70b-versatile
+# langchain-anthropic      # LLM=anthropic:claude-sonnet-4-6
+# langchain-ollama         # LLM=ollama:llama3

@@ -1,0 +1,8 @@
+code,iata_level,designation,note,source
+JFK,3,Level 3 - Coordinated,FAA slot-controlled; scheduled operations require slots,https://www.faa.gov/about/office_org/headquarters_offices/ato/service_units/systemops/perf_analysis/slot_administration
+LGA,3,Level 3 - Coordinated,FAA slot-controlled; scheduled operations require slots,https://www.faa.gov/about/office_org/headquarters_offices/ato/service_units/systemops/perf_analysis/slot_administration
+DCA,3,Level 3 - Coordinated,FAA slot-controlled; also subject to a perimeter rule,https://www.faa.gov/about/office_org/headquarters_offices/ato/service_units/systemops/perf_analysis/slot_administration
+EWR,2,Level 2 - Schedule Facilitated,FAA seeks carrier cooperation on runway schedules,https://www.faa.gov/about/office_org/headquarters_offices/ato/service_units/systemops/perf_analysis/slot_administration
+ORD,2,Level 2 - Schedule Facilitated,FAA seeks carrier cooperation on runway schedules,https://www.faa.gov/about/office_org/headquarters_offices/ato/service_units/systemops/perf_analysis/slot_administration
+SFO,2,Level 2 - Schedule Facilitated,FAA seeks carrier cooperation on runway schedules,https://www.faa.gov/about/office_org/headquarters_offices/ato/service_units/systemops/perf_analysis/slot_administration
+LAX,2,Level 2 - Schedule Facilitated,FAA seeks carrier cooperation on runway schedules,https://www.faa.gov/about/office_org/headquarters_offices/ato/service_units/systemops/perf_analysis/slot_administration

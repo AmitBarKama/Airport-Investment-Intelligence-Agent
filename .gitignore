@@ -1,0 +1,27 @@
+# ── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# ── Secrets ─────────────────────────────────────────────────────────────────
+# .env.example is committed; the real .env never is.
+.env
+.env.local
+
+# ── OS / editors ────────────────────────────────────────────────────────────
+.DS_Store
+.idea/
+.vscode/
+
+# ── Source data (321 MB of BTS/OurAirports CSVs) ────────────────────────────
+# Not in git: too large, and freely re-downloadable. `make etl` rebuilds
+# data/airports.db from them. The built db IS committed so the deploy has
+# data without running the ETL.
+airport-agent/data/raw/*.csv
+airport-agent/data/raw/*.zip
+
+# ── Local scratch ───────────────────────────────────────────────────────────
+airport-agent/.preview/
+.claude/
+.vercel/
