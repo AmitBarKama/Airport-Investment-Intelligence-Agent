@@ -437,3 +437,48 @@ the startup banner always say which is actually answering.
 
 Every assumption (`LONG_HAUL_NMI`, weights, hop limit) is configuration and is
 echoed back through `/meta`.
+
+## Deploying (Vercel)
+
+The deployed app is the same code as the local one. Vercel's Python runtime
+drives a module-level `handler` that subclasses `BaseHTTPRequestHandler`, and
+`api.server.Handler` already is one, so `vercel_app.py` is a re-export and
+there is no second server implementation to keep in sync.
+
+Import the repo at <https://vercel.com/new>, then:
+
+| Setting | Value |
+|---|---|
+| **Root Directory** | `airport-agent` |
+| Framework Preset | Other (`vercel.json` drives the build) |
+
+Add the environment variables under **Settings → Environment Variables** —
+the same names `.env` uses locally:
+
+```
+LLM=google_genai:gemini-3.5-flash-lite
+GOOGLE_API_KEY=...
+```
+
+Everything else is optional and degrades cleanly: with no key at all the
+deploy still serves the UI and the full deterministic API on the keyless
+planner. `ELEVENLABS_API_KEY` / `OPENAI_API_KEY` enable neural voice,
+`TAVILY_API_KEY` / `BRAVE_API_KEY` enable announced-plans lookup.
+
+`data/airports.db` is committed for exactly this reason: the ETL needs 321 MB
+of BTS/OurAirports CSVs that are not in git and could not be downloaded during
+a build, so the deploy ships the built database instead. Rebuild it locally
+with `make etl` and commit the result when the source data is refreshed.
+
+### Two things behave differently in serverless
+
+**`/chat` does not stream.** A serverless response is delivered whole, so the
+SSE frames arrive in one chunk at the end. The browser parses them identically
+— it buffers and splits on the frame separator either way — so the answer is
+unchanged; what is lost is the live "thinking" ticker during the wait.
+
+**Agent turns can outrun the function timeout.** A multi-hop answer with a slow
+provider can exceed the default limit. Raise it under **Settings → Functions →
+Max Duration** (this project pins its build with `builds`, which is mutually
+exclusive with a `functions` block in `vercel.json`, so the dashboard is the
+place to set it).

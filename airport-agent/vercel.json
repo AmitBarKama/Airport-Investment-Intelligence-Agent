@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "builds": [
+    {
+      "src": "vercel_app.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "150mb",
+        "includeFiles": "{api,etl,web}/**/*,data/airports.db"
+      }
+    }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "vercel_app.py" }
+  ]
+}

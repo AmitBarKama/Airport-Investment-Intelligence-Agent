@@ -45,6 +45,11 @@ RAW_DIR = os.path.join(ROOT, "data", "raw")
 CURATED_DIR = os.path.join(ROOT, "etl", "curated")
 WEB_DIR = os.path.join(ROOT, "web")
 
+# Vercel sets VERCEL=1 in build and runtime environments. The only thing
+# that turns on is cache headers: on a serverless deploy every static byte
+# costs a function invocation, so revalidating them per page load is wrong.
+IS_DEPLOYED = bool(os.environ.get("VERCEL"))
+
 # ---------------------------------------------------------------- assumptions
 # There is NO international standard for what counts as a long-haul flight.
 # Industry usage spans roughly 2,200-2,600 nmi; ICAO and IATA both define by

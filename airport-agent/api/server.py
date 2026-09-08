@@ -43,6 +43,27 @@ def _json_default(o):
         return str(o)
 
 
+class _HeadOnlyWriter:
+    """Lets the response headers through and swallows the body after them.
+
+    HEAD must answer with GET's status and headers but no body. Wrapping wfile
+    is what lets do_HEAD reuse do_GET's routing table verbatim instead of
+    growing a second one that can drift out of step with it.
+    """
+
+    def __init__(self, wfile):
+        self._wfile = wfile
+        self.body_started = False
+
+    def write(self, data):
+        if self.body_started:
+            return len(data)
+        return self._wfile.write(data)
+
+    def flush(self):
+        return self._wfile.flush()
+
+
 class Handler(SimpleHTTPRequestHandler):
     server_version = "AirportAgent/1.0"
 
@@ -118,6 +139,28 @@ class Handler(SimpleHTTPRequestHandler):
         except Exception as exc:                          # noqa: BLE001
             traceback.print_exc()
             self._send_json({"error": str(exc)}, 500)
+
+    # ------------------------------------------------------------------ HEAD
+    def do_HEAD(self):                                   # noqa: N802
+        """Answer HEAD from the same routing table as GET.
+
+        SimpleHTTPRequestHandler's inherited do_HEAD serves the process's
+        working directory, which is the project root and not web/. It therefore
+        answered for files that are not the site at all -- the Python sources
+        next to it -- knew none of the routes above, and raised a traceback on
+        anything it could not find. Running GET with the body swallowed gives
+        HEAD the right answer for every route by construction.
+        """
+        real, self.wfile = self.wfile, _HeadOnlyWriter(self.wfile)
+        try:
+            self.do_GET()
+        finally:
+            self.wfile = real
+
+    def end_headers(self):
+        super().end_headers()
+        if isinstance(self.wfile, _HeadOnlyWriter):
+            self.wfile.body_started = True
 
     # ------------------------------------------------------------------ POST
     def do_POST(self):                                   # noqa: N802
@@ -250,7 +293,12 @@ class Handler(SimpleHTTPRequestHandler):
         self.send_header("Content-Length", str(len(data)))
         # A dev server that serves stale JS is a debugging trap: the code on
         # disk and the code in the browser disagree, and nothing says so.
-        self.send_header("Cache-Control", "no-cache, must-revalidate")
+        # A deployed build is immutable, and there every asset byte is served
+        # by a function invocation, so the same default would bill ~800 KB of
+        # orb and script through the runtime on every single page load.
+        self.send_header("Cache-Control",
+                         "public, max-age=3600" if config.IS_DEPLOYED
+                         else "no-cache, must-revalidate")
         self.end_headers()
         self.wfile.write(data)
 
