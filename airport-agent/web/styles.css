@@ -247,7 +247,8 @@ html[data-theme="dark"] .theme-switch .knob{left:20px; background:#fff}
 .step.done{color:var(--text2)}
 
 /* answer body */
-.ai-body h3, .vm-body h3{font-size:18px; font-weight:600; margin:18px 0 8px; letter-spacing:-.01em}
+.ai-body h3, .vm-body h3{font-size:18px; font-weight:600; margin:18px 0 8px;
+  letter-spacing:-.01em; color:var(--text)}
 .ai-body p{margin:0 0 13px}
 .ai-body ul{margin:0 0 13px; padding-left:20px}
 .ai-body li{margin:5px 0}
@@ -646,6 +647,9 @@ html[data-theme="dark"] .pill.ext{background:#1E1B4B; color:#C7D2FE; border-colo
 /* The voice transcript renders markdown now, so it needs the same vocabulary
    as the chat bubble, one size down to suit the narrower column. */
 .vm-body{margin-top:2px}
+/* Emphasis is set upright and muted rather than italic, the same as the chat
+   bubble -- otherwise the identical answer reads differently in the two modes. */
+.vm-body em{font-style:normal; color:var(--text2)}
 .vm-body p{margin:0 0 10px}
 .vm-body p:last-child{margin-bottom:0}
 .vm-body ul{margin:0 0 10px; padding-left:20px}

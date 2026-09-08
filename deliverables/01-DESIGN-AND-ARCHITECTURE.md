@@ -1,8 +1,8 @@
 # Deliverable 2 — Design & Architecture
 
 *The assignment asks the design document to explain three things. They get a
-file each: [scoring methodology](03-SCORING-METHODOLOGY.md),
-[key tradeoffs](04-KEY-TRADEOFFS.md), [where AI is used](05-WHERE-AI-IS-USED.md).
+file each: [scoring methodology](02-SCORING-METHODOLOGY.md),
+[key tradeoffs](03-KEY-TRADEOFFS.md), [where AI is used](04-WHERE-AI-IS-USED.md).
 This file is the system design those three sit inside.*
 
 ---
@@ -129,10 +129,9 @@ function:
 | **Nothing installed but Python** | ETL, scoring, all REST endpoints, the entire web UI |
 
 A transient model failure mid-conversation falls back to the keyless planner
-*for that turn* and says so, rather than killing the stream. (This is exercised
-in [07-VERIFICATION-EVIDENCE.md §6](07-VERIFICATION-EVIDENCE.md) — it happened
+*for that turn* and says so, rather than killing the stream. (This happened
 during the audit, and the fallback's scope guard then misfired on a
-context-only follow-up. See [08](08-GAPS-RISKS-AND-FIXES.md).)
+context-only follow-up.)
 
 ---
 
@@ -168,7 +167,7 @@ score reads:
 - *Capacity* — ASV, its source, runway configuration, parallel separation, IMC constraint
 - *Derived* — demand/ASV, CAGRs, upgauge delta, spill rate, unconstrained demand, catchment gap
 - *Curated* — slot level, feasibility + its source, constraint fact, curfew, passenger cap
-- *Operational* — taxi-out p50, delay-15 rate, cancel rate, peaking *(all NULL: see [08](08-GAPS-RISKS-AND-FIXES.md))*
+- *Operational* — taxi-out p50, delay-15 rate, cancel rate, peaking *(all NULL)*
 
 Every field that is a *judgment* carries its source alongside it
 (`feasibility_source`, `asv_source`), so the confidence calculation can tell a

@@ -162,8 +162,7 @@ rule-based planner is the single largest module in the codebase. The cost
 showed up concretely during the audit: when the LLM call failed transiently
 mid-conversation, the fallback took over and its scope guard **refused a
 legitimate follow-up** ("What about it makes you uncertain?") because the
-sentence contains no aviation vocabulary. The graph path handles it fine. See
-[08-GAPS-RISKS-AND-FIXES.md](08-GAPS-RISKS-AND-FIXES.md).
+sentence contains no aviation vocabulary. The graph path handles it fine.
 
 ---
 

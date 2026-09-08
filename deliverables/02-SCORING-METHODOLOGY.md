@@ -127,7 +127,7 @@ departure cap, curfew through 2035), BOS 0.35 (peninsular site), DEN 0.95.
 
 The other **603 airports** receive a size-based prior — large 0.55, medium
 0.75, small 0.80 — flagged as `default_by_type`. This is the build's largest
-soft spot and is discussed in [08-GAPS-RISKS-AND-FIXES.md](08-GAPS-RISKS-AND-FIXES.md).
+soft spot.
 
 ### Pillar 5 — Monetization
 
@@ -161,7 +161,7 @@ not know which they are looking at cannot interpret the number.
 > cohort of 624 airports**, most of which are small. PWM sits at 11% of its ASV
 > — genuinely uncongested — yet lands in the **87th percentile** of saturation.
 > The FAA tier catches this correctly (Tier D, "no capacity case"), but the
-> composite score does not. See [08](08-GAPS-RISKS-AND-FIXES.md).
+> composite score does not.
 
 ---
 
@@ -199,8 +199,7 @@ That is not a hypothetical: LGA's real demand/ASV in this database is **1.43** �
 the most saturated airport in the cohort — against a curated feasibility of
 **0.08**. `test_scoring.py` carries this as an explicit non-compensatory proof.
 
-*(Figures computed directly from `geometric_score` with the default weights;
-reproduce them with the snippet in [07-VERIFICATION-EVIDENCE.md](07-VERIFICATION-EVIDENCE.md).)*
+*(Figures computed directly from `geometric_score` with the default weights.)*
 
 ---
 

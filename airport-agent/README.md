@@ -113,8 +113,8 @@ data/airports.db         SQLite, built by etl/
 | SSE not WebSockets | one-way token streaming over plain HTTP | would need WS for native speech-to-speech |
 | vanilla JS | no build step, no npm | no component framework |
 
-Full reasoning, alternatives rejected, and interview prep:
-[`../docs/09-tradeoffs-cheatsheet.md`](../docs/09-tradeoffs-cheatsheet.md).
+Full reasoning and the alternatives rejected:
+[`../deliverables/03-KEY-TRADEOFFS.md`](../deliverables/03-KEY-TRADEOFFS.md).
 
 ---
 
@@ -138,7 +138,7 @@ perimeter-ruled, slot-controlled. A naive congestion ranking puts it first. This
 one doesn't. There is a unit test asserting exactly that
 (`tests/test_scoring.py::test_geometric_mean_is_not_compensatory`).
 
-Method detail: [`../docs/02-scoring-methodology.md`](../docs/02-scoring-methodology.md).
+Method detail: [`../deliverables/02-SCORING-METHODOLOGY.md`](../deliverables/02-SCORING-METHODOLOGY.md).
 
 ---
 
@@ -366,8 +366,6 @@ The part that matters: generic speech recognition mangles aviation vocabulary
 applying it silently. In voice mode the agent returns a separate `speech_text`
 capped at three spoken sentences — a markdown table read aloud is unusable.
 
-Upgrade path and the pipeline-vs-speech-to-speech tradeoff:
-[`../docs/05-voice.md`](../docs/05-voice.md).
 
 ---
 

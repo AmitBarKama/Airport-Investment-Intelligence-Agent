@@ -168,7 +168,7 @@ every number, the numbers were never coming from the LLM.
 The fallback also catches transient failures per-turn. During the audit an LLM
 call failed mid-conversation; the loop degraded to the keyless planner for that
 turn and said so, rather than dropping the stream. (It then misfired on a
-context-only follow-up — see [08-GAPS-RISKS-AND-FIXES.md](08-GAPS-RISKS-AND-FIXES.md).)
+context-only follow-up.)
 
 ---
 

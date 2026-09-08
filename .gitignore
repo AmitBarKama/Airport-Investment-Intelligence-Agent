@@ -21,6 +21,11 @@ venv/
 airport-agent/data/raw/*.csv
 airport-agent/data/raw/*.zip
 
+# ── Private working material ────────────────────────────────────────────────
+# The research pack and the internal explanation / compliance / verification /
+# gaps notes. Kept on disk, deliberately out of the submitted repo.
+for me/
+
 # ── Local scratch ───────────────────────────────────────────────────────────
 airport-agent/.preview/
 .claude/
