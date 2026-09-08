@@ -292,12 +292,19 @@ class Handler(SimpleHTTPRequestHandler):
         self.send_header("Content-Type", ctype)
         self.send_header("Content-Length", str(len(data)))
         # A dev server that serves stale JS is a debugging trap: the code on
-        # disk and the code in the browser disagree, and nothing says so.
-        # A deployed build is immutable, and there every asset byte is served
-        # by a function invocation, so the same default would bill ~800 KB of
-        # orb and script through the runtime on every single page load.
+        # disk and the code in the browser disagree, and nothing says so. That
+        # is just as true of a browser holding yesterday's app.js after a fix
+        # has shipped -- so markup, script and style always revalidate.
+        #
+        # Media is the other half: the orbs alone are ~730 KB of the ~840 KB
+        # this serves, they do not change between builds, and on a serverless
+        # deploy every byte of them costs a function invocation. Those get a
+        # real cache; the 110 KB of code does not, and cannot go stale.
+        cacheable = full.rsplit(".", 1)[-1].lower() in {
+            "png", "jpg", "jpeg", "gif", "webp", "svg", "ico",
+            "woff", "woff2", "ttf", "mp3"}
         self.send_header("Cache-Control",
-                         "public, max-age=3600" if config.IS_DEPLOYED
+                         "public, max-age=86400" if config.IS_DEPLOYED and cacheable
                          else "no-cache, must-revalidate")
         self.end_headers()
         self.wfile.write(data)
